@@ -178,3 +178,97 @@ console.log(con()); //2
 console.log(con()); //0
 console.log(con()); //1
 console.log(con()); //undefined
+
+
+// CHALLENGE 6
+//********************* GENERATE SYMBOLS FACTORY ********************
+
+// Make a function gensymf that makes a function that generates unique symbols.
+
+function gensymf(prefix) {
+  var number = 0;
+  return function() {
+    number += 1;
+    return prefix + number;
+  };
+}
+
+var geng = gensymf("G"), genh = gensymf("H");
+console.log(geng()); // "G1"
+console.log(genh()); // "H1"
+console.log(geng()); // "G2"
+console.log(genh()); // "H2"
+
+//********************** FACTORY FACTORY *******************************
+
+// Write a function gensymff that takes a unary function & a seed & returns a gensymf.
+
+// function gensymff(unary, seed) {
+//   return function(prefix) {
+//     var number = seed;
+//     return function() {
+//       number = unary(number);
+//       return prefix + number;
+//     }
+//   }
+// }
+
+// var gensymf = gensymff(inc, 0), // no increment function
+// geng = gensymf("G"),
+// genh = gensymf("H");
+
+// console.log(geng()); // "G1"
+// console.log(genh()); // "H1"
+// console.log(geng()); // "G2"
+// console.log(genh()); // "H2"
+
+//*********************** FIBONACCI GENERATOR *******************************
+
+// Make a function fibonaccif that returns a generator that will return the next fibonacci number.
+
+function fibonaccif(a, b) {
+  var i = 0;
+  return function() {
+    var next;
+    switch (i) {
+      case 0:
+        i = 1;
+        return a;
+      case 1:
+        i = 2;
+        return b;
+      default:
+        next = a + b;
+        a = b;
+        b = next;
+        return next;
+    }
+  };
+}
+
+// function fibonaccif(a, b) {
+//   return concat(element([a, b]), function fibonacci() {
+//     var next = a + b;
+//     a = b;
+//     b = next;
+//     return next;
+//   })
+// }
+
+// function fibonaccif(a, b) {
+//   return function() {
+//     var next = a;
+//     a = b;
+//     b += next;
+//     return next;
+//   }
+// }
+
+
+var fib = fibonaccif(0, 1);
+console.log(fib()); //0
+console.log(fib()); //1
+console.log(fib()); //1
+console.log(fib()); //2
+console.log(fib()); //3
+console.log(fib()); //5
